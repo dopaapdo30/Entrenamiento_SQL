@@ -11,3 +11,7 @@ inner join gerentes on sales.branch = gerentes.branch
 group by gerentes.nombre_gerente
 order by  ventas_articulos asc;
 
+-----Left join----
+select gerentes.nombre_gerente, sales.branch, sales.total_price
+from gerentes 
+left join sales on gerentes.branch = sales.branch;
