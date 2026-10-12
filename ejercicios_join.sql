@@ -60,5 +60,17 @@ case
 	end as prioridad_concursal
 	from gerentes
 left join sales on gerentes.branch = sales.branch;
+-----ejercicio 10------
+select sale_id, total_price, quantity,
+case 
+	when total_price > 200 or quantity >= 30 then 'Revision Prioritaria'
+	else 'Sin Riesgo'
+end as alerta_transaccion
+from sales;
+-----ejercicio 11----------
+select sale_id, product_name, total_price
+from sales
+where total_price > (select avg(total_price) from sales);
+
 
 
