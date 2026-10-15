@@ -122,3 +122,34 @@ select customer_type, count(*) as cantidad_ventas
 from sales
 group by customer_type
 having count(*) > 10;
+-----------ejercicio 21-------------------
+select sale_id, city, total_price
+from sales
+where (city = 'New York' or city = 'Chicago') and total_price > 100;
+-----------ejercicio 22-----------------------
+select sale_id, city, product_category 
+from sales
+where city in ('Chicago', 'Los Angeles');
+----------ejercicio 23----------------
+select sum(total_price) as suma_total
+from sales;
+---------ejercicio 24-------------
+select city, sum(total_price) as ingreso_total
+from sales 
+group by city
+having sum(total_price) > 10000
+order by ingreso_total desc;
+---------ejercicio 25-------------------
+select city, count(*) as cantidad_ventas
+from sales 
+group by city
+having count(*) > 100
+order by cantidad_ventas desc;
+-------ejercicio 26-------------
+SELECT 
+    sales.sale_id, 
+    sales.total_price, 
+    gerentes.nombre_gerente
+FROM sales
+INNER JOIN gerentes
+ON sales.branch = gerentes.branch;
