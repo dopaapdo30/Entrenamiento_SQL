@@ -71,6 +71,54 @@ from sales;
 select sale_id, product_name, total_price
 from sales
 where total_price > (select avg(total_price) from sales);
-
-
-
+-------ejercicio 12----------
+select sale_id, city, product_category, total_price,
+case 
+    when total_price >= 100 then 'Ticket Alto'
+    else 'Ticket Normal'
+end as tipo_ticket
+from sales
+where city in ('New York', 'Chicago');
+-------ejercicio 13------------------
+select sale_id, quantity, total_price
+from sales
+where quantity > (select avg(quantity) from sales);
+------ejercicio 14-------------
+select sale_id, city, customer_type
+from sales 
+where city in ('Los Angeles', 'Chicago');
+------ejercicio 15--------------
+select 
+    sale_id, 
+    city, 
+    customer_type, 
+    total_price,
+    case 
+        when total_price >= 100  then 'Ticket Alto'
+        else 'Ticket Normal'
+    end as tipo_ticket
+from sales
+where city in ('Los Angeles', 'Chicago');
+------ejercicio 16-----------------------
+select sale_id, city, total_price
+from sales
+where city = 'New York' and total_price > 50;
+------ejercicio 17------------------------
+select sale_id, product_category, city
+from sales
+where city in ('Chicago', 'Los Angeles')
+-------ejercicio 18-------------------------
+select total_price, city
+from sales
+group by city
+order by total_price desc;
+---------ejercicio 19-------------------------
+select city, sum(total_price) as ingreso_total
+from sales
+group by city
+order by ingreso_total desc;
+----------ejercicio 20------------------
+select customer_type, count(*) as cantidad_ventas
+from sales
+group by customer_type
+having count(*) > 10;
