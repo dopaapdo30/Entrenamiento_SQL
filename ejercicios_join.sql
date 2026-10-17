@@ -256,3 +256,64 @@ WHERE sales.total_price = (
     SELECT MAX(total_price) 
     FROM sales
 );
+--------ejercicio 42-------------
+-----------Filtrando a los mejores vendedores con CTE--------
+with totalVentas as (select branch, sum(total_price) as suma_total
+from sales
+group by branch 
+)
+
+select branch, suma_total
+from totalVentas
+where suma_total > 500
+order by suma_total desc;
+--------ejercicio 43-----------
+with conteoTickets as(select branch, count(sale_id) as total_tickets
+from sales
+group by branch
+)
+select branch, total_tickets
+from conteoTickets 
+where total_tickets > 500
+order by total_tickets desc;
+------ejercicio 42------------
+SELECT EXTRACT(MONTH FROM sale_date) AS mes, COUNT(sale_id) AS total_tickets
+FROM sales
+GROUP BY EXTRACT(MONTH FROM sale_date);
+------ejercicio 43----------
+select * from sales limit 10;
+-----ejercicio 44--------
+SELECT DISTINCT branch FROM sales;
+-----ejercicio 45---------1
+select city, sum(total_price) as ciudad_top
+from sales 
+group by city
+order by ciudad_top desc;
+-----ejercicio 46----------2
+select sales.product_category, gerentes.nombre_gerente as gerente_acargo
+from gerentes 
+inner join sales 
+on gerentes.branch = sales.branch
+order by gerente_acargo;
+-----ejercicio 47---------3
+select sale_id, total_price,
+case
+	when total_price >= 200 then 'TICKET ALTO'
+	else 'TICKET NORMAL'
+end as tickes_compra
+from sales
+order by tickes_compra desc;
+------ejercicio 48--------4
+select extract(month from sale_date) as mes, sum(quantity) as volumen_articulos
+from sales
+group by extract(month from sale_date)
+order by volumen_articulos desc;
+-------ejercicio 49-------5
+with VentasporMembresia as(select sale_id, count(customer_type) as top_Cliente
+from sales
+group by sale_id
+)
+select sale_id, top_cliente
+from VentasporMembresia
+where top_cliente >= 2
+order by top_Cliente desc;
