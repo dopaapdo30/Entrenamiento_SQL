@@ -11,7 +11,7 @@ where sales.customer_type is null;
 select gerentes.nombre_gerente, sum (sales.quantity)
 from gerentes 
 left join sales on gerentes.branch = sales.branch
-group by gerentes.nombre_gerente 
+group by gerentes.nombre_gerente;
 -------ejercicio 4---------------
 select gerentes.nombre_gerente, sum (sales.quantity) as total_unidades_vendidas
 from gerentes 
@@ -317,3 +317,30 @@ select sale_id, top_cliente
 from VentasporMembresia
 where top_cliente >= 2
 order by top_Cliente desc;
+--------ejercicio 50----------
+select product_name, unit_price,
+case 
+when unit_price > 10 then 'Ticket Alto' 
+else 'Ticket Bajo'
+end as tipo_ticket
+from sales
+--------ejercicio 51----------
+select product_category, sum(total_price) as ingreso_total
+from sales
+group by product_category
+order by ingreso_total desc;
+--------ejercicio 52-----------
+select gerentes.nombre_gerente, sum(sales.total_price) as ventas_del_gerente
+from gerentes
+inner join sales 
+on gerentes.branch = sales.branch
+group by gerentes.nombre_gerente
+order by ventas_del_gerente desc;
+--------ejercicio 53---------------cruzar-filtrar-Agrupar
+select gerentes.nombre_gerente, sum(sales.total_price) as ingreso_marzo
+from gerentes 
+inner join sales
+on gerentes.branch = sales.branch 
+where EXTRACT(MONTH FROM sales.sale_date) = 3
+GROUP BY gerentes.nombre_gerente;
+--------ejercicio 54----------------------
