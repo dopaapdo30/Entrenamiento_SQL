@@ -344,3 +344,32 @@ on gerentes.branch = sales.branch
 where EXTRACT(MONTH FROM sales.sale_date) = 3
 GROUP BY gerentes.nombre_gerente;
 --------ejercicio 54----------------------
+SELECT sale_id, branch, total_price 
+FROM sales 
+WHERE total_price = (
+    SELECT MAX(total_price) 
+    FROM sales
+);
+-------ejercicio 55--------------------
+--El equipo de finanzas quiere saber cuál fue la venta de menor valor que se ha registrado.
+select sale_id, product_name, total_price 
+from sales
+where total_price = ( select min(total_price)
+from sales
+);
+--------ejercicio 56------------
+--El gerente de la tienda quiere premiar a los cajeros que logran ventas por encima 
+--del promedio general, pero primero necesita ver cuáles son esos tickets.
+select sale_id, total_price
+from sales
+where total_price > (select avg(total_price)
+from sales
+);
+--------ejercicio 57---------
+--Imagina que desde el almacén central te avisan que hay un lote defectuoso del producto más
+--barato de todo el inventario y necesitan saber en qué ciudad se vendió para retirarlo.
+select city, product_name, unit_price
+from sales 
+where unit_price = ( select min(unit_price)
+from sales
+);
