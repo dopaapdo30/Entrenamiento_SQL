@@ -373,3 +373,18 @@ from sales
 where unit_price = ( select min(unit_price)
 from sales
 );
+-- Reto del Jefe Final: Reporte de Alto Rendimiento
+select gerentes.nombre_gerente ,sum(sales.total_price) as venta_primium
+from gerentes 
+inner join sales
+on gerentes.branch = sales.branch 
+where sales.total_price > (select avg(total_price)
+from sales)
+group by gerentes.nombre_gerente
+------ejercicio 59---1
+select sale_id, sale_date,
+case 
+	when extract(month from sale_date)= 11 then 'camapaña Noviembre'
+	else 'regular'
+end as tipo_venta
+from sales;
