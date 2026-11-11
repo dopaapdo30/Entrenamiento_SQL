@@ -427,4 +427,41 @@ CASE
     ELSE 'Estándar'
     END AS etiqueta
 FROM sales;
-
+---Los CTEs (Cláusula WITH).
+WITH ventas_por_ciudad AS (
+    SELECT city, SUM(total_price) AS dinero_generado
+    FROM sales
+    GROUP BY city
+)
+SELECT *
+FROM ventas_por_ciudad
+WHERE dinero_generado > 600;
+--El CTE Básico (Filtro sobre agrupación)
+with ventas_por_productos as(
+     select product_name, sum(total_price) as total_recaudado
+     from sales 
+     group by product_name 
+)
+select *
+from ventas_por_productos 
+where total_recaudado > 400
+---El CTE con JOIN (El reporte gerencial)
+WITH promedio_sucursal AS (
+     SELECT branch, AVG(total_price) AS ticket_promedio
+     FROM sales
+     GROUP BY branch
+)
+SELECT gerentes.nombre_gerente, promedio_sucursal.ticket_promedio
+FROM gerentes
+INNER JOIN promedio_sucursal
+ON gerentes.branch = promedio_sucursal.branch;
+----El CTE de Campaña (El Reto Final)
+with campaña_enero as(
+     select city, sum(total_price) as ingresos_enero
+     from sales
+     where extract(month from sale_date) =1
+     group by city
+)
+select *
+from campaña_enero
+order by ingresos_enero desc;
