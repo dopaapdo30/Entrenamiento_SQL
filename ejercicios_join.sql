@@ -388,3 +388,43 @@ case
 	else 'regular'
 end as tipo_venta
 from sales;
+------ejercicio 60---2
+select sale_id, sale_date,
+case
+	when extract(month from sale_date) = 11 then 'campaña Noviembre'
+	else 'regular'
+	end as tipo_venta
+from sales
+order by tipo_venta desc;
+-----Examen de Certificación Junior---------
+--Agrupación Básica (GROUP BY + SUM)---1
+select customer_type, sum(total_price) as total_generado_por_cliente
+from sales 
+group by customer_type
+order by total_generado_por_cliente desc;
+--Cruce Relacional (INNER JOIN + WHERE)---2
+select gerentes.nombre_gerente, sales.city, sum(sales.total_price) as venta_ciudad
+from gerentes
+inner join sales 
+on gerentes.branch = sales.branch 
+where sales.city = 'New York'
+group by gerentes.nombre_gerente, sales.city
+order by venta_ciudad desc;
+--Subconsultas (Subqueries)---3
+select sale_id, product_name, total_price as precio_maximo
+from sales
+where total_price = (select max(total_price) from sales
+)
+order by precio_maximo desc;
+--Manejo de Fechas (EXTRACT)--4
+select sale_id, sale_date, total_price
+from sales 
+where extract(month from sale_date) = 1 and extract(year from sale_date) = 2026;
+--Lógica Condicional (CASE WHEN)--5
+SELECT product_name, unit_price,
+CASE 
+    WHEN unit_price > 15 THEN 'Premium'
+    ELSE 'Estándar'
+    END AS etiqueta
+FROM sales;
+
