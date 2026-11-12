@@ -465,3 +465,7 @@ with campaña_enero as(
 select *
 from campaña_enero
 order by ingresos_enero desc;
+--Las Funciones de Ventana (Window Functions)--
+select sale_id, city, total_price,
+        ROW_NUMBER() OVER(PARTITION BY city ORDER BY total_price DESC) AS ranking_ciudad
+from sales   
